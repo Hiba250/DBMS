@@ -1,0 +1,53 @@
+-- 
+-- Roll No: <your roll no>
+-- Name: <your name>
+-- Program: <program name>
+-- 
+
+
+--
+-- Table structure for table <departments>
+--
+create table departments (dno int primary key, dname varchar(50) NOT NULL);
+
+--
+-- Table structure for table <bookissues>
+--
+create table bookissues ( bookid int,studentid int,issue_date date,return_date date,fine decimal(5,2) default 0.00);
+alter table bookissues add constraint pk_bookissues primary key (bookid,studentid);
+alter table bookissues add constraint fk_bookid foreign key (bookid) references books(bookid);
+alter table bookissues add constraint fk_studentid foreign key (studentid) references students(studentid);
+
+
+--
+-- Table structure for table <students>
+--
+alter table students drop course;
+alter table students add dno int;
+alter table students add constraint fk_dno foreign key (dno) references departments(dno);
+ 
+
+--
+-- Dumping data for table <departments>
+--
+insert into departments values(1,'MCA'),(2,'MBA');
+--
+-- Dumping data for table <bookissues>
+--
+insert into bookissues values(2,101,'2025-02-10',NULL,0.00),(1,102,'2025-02-12','2025-02-18',0.0);
+
+
+--
+-- SQl Query Statements
+--
+-- Q7. List all books issued with student details (include attributes studentid, name, bookid, title)
+select students.studentid,students.name,books.bookid,books.title from bookissues join students on bookissues.studentid = students.studentid join books on bookissues.bookid = books.bookid;
+-- Q8. Show all students along with their department names (include attributes studentid, name, dname)
+select students.studentid, students.name,departments.dname from students
+join departments on students.dno = departments.dno;
+-- Q9. List students who have issued books along with their department (include attributes studentid, name, dname, bookid, title)
+select books.bookid,books.title from books left join bookissues on books.bookid = bookissues.bookid where bookissues.bookid is NULL;
+-- Q10. Find books that have never been issued (include attributes bookid, title)
+
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file
