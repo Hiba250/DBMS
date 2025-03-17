@@ -1,0 +1,1 @@
+insert into books values (6,'OOP','anil',300,'2021-05-30'),(7,'Maths','Alexanter',500,'1956-11-25'),(8,'Network','Alice',400,'2000-03-07'),(9,'Mysql','Manu',330,'2020-06-28'),(10,'AI','Arjun',600,'2022-05-24');
