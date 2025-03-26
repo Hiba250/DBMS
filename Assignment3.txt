@@ -1,0 +1,26 @@
+-- 
+-- Roll No: 21
+-- Name: <your name>
+-- Program: <program name>
+-- 
+
+
+--
+-- Table structure for table librarianid
+--
+create table librarians(librarianid int PRIMARY KEY AUTO_INCREMENT, name varchar (50) NOT NULL, email varchar(100) unique NOT NULL,phone varchar(10) unique NOT NULL);
+-- ---------create/alter statement commands----------- # This line may be removed in the actual file
+alter table bookissues add librarianid int;
+
+--
+-- Dumping data for table librarianid
+--
+insert into librarians values(1, 'John Smith', 'john.smith@example.com', 9876543210),(2, 'Emma Brown', 'emma.brown@example.com', 8765432109),(3, 'David Wilson','david.wilson@example.com', 7654321098), (4, 'Franklin', 'franklin@example.com', 3445236778);
+-- --------insert/update statement commands----------- # This line may be removed in the actcual file
+
+--
+-- SQl Query Statements
+--
+
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file
