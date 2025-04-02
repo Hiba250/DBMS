@@ -1,53 +1,41 @@
 -- 
--- Roll No: <your roll no>
--- Name: <your name>
+-- Roll No: 21
+-- Name: Hiba Nasrin
 -- Program: <program name>
 -- 
 
 
 --
--- Table structure for table <departments>
+-- Table structure for table librarianid
 --
-create table departments (dno int primary key, dname varchar(50) NOT NULL);
+create table librarians(librarianid int PRIMARY KEY AUTO_INCREMENT, name varchar (50) NOT NULL, email varchar(100) unique NOT NULL,phone varchar(10) unique NOT NULL);
 
 --
--- Table structure for table <bookissues>
+-- Table structure for table bookissues
 --
-create table bookissues ( bookid int,studentid int,issue_date date,return_date date,fine decimal(5,2) default 0.00);
-alter table bookissues add constraint pk_bookissues primary key (bookid,studentid);
-alter table bookissues add constraint fk_bookid foreign key (bookid) references books(bookid);
-alter table bookissues add constraint fk_studentid foreign key (studentid) references students(studentid);
-
+alter table bookissues add librarianid int;
+alter table bookissues add constraint bookissues_fkey_librarianid foreign key (librarianid) references librarians(librarianid);
 
 --
--- Table structure for table <students>
+-- Dumping data for table librarianid
 --
-alter table students drop course;
-alter table students add dno int;
-alter table students add constraint fk_dno foreign key (dno) references departments(dno);
- 
+insert into librarians values(1, 'John Smith', 'john.smith@example.com', 9876543210),(2, 'Emma Brown', 'emma.brown@example.com', 8765432109),(3, 'David Wilson','david.wilson@example.com', 7654321098), (4, 'Franklin', 'franklin@example.com', 3445236778);
 
 --
--- Dumping data for table <departments>
+-- Dumping data for table bookissues
 --
-insert into departments values(1,'MCA'),(2,'MBA');
---
--- Dumping data for table <bookissues>
---
-insert into bookissues values(2,101,'2025-02-10',NULL,0.00),(1,102,'2025-02-12','2025-02-18',0.0);
-
+update bookissues set librarianid = 1 where bookid IN ( 1,2);
+update bookissues set librarianid = 1 where bookid IN ( 3,4);
+update bookissues set librarianid = 1 where bookid IN ( 5,6);
 
 --
 -- SQl Query Statements
 --
--- Q7. List all books issued with student details (include attributes studentid, name, bookid, title)
-select students.studentid,students.name,books.bookid,books.title from bookissues join students on bookissues.studentid = students.studentid join books on bookissues.bookid = books.bookid;
--- Q8. Show all students along with their department names (include attributes studentid, name, dname)
-select students.studentid, students.name,departments.dname from students
-join departments on students.dno = departments.dno;
--- Q9. List students who have issued books along with their department (include attributes studentid, name, dname, bookid, title)
-select books.bookid,books.title from books left join bookissues on books.bookid = bookissues.bookid where bookissues.bookid is NULL;
--- Q10. Find books that have never been issued (include attributes bookid, title)
 
--- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
--- -----Question number should be commented---------------#This line may be removed in the actual file
+-- 05. List all book issues with student and librarian details (include attributes studend name, title, librarian name)
+select students.name as name,books.title as title,librarians.name as name from bookissues join students on bookissues.studentid = students.studentid join books on bookissues.bookid=books.bookid join librarians on bookissues.librarianid = librarians.librarianid;
+-- 06. Count the number of books issued by each librarian (include attributes librarianid, name, total_books_issued)
+select librarians.librarianid,librarians.name as name,count(bookissues.bookid) as bookid  from  librarians left join bookissues on librarians.librarianid = bookissues.librarianid group by librarians.librarianid,librarians.name;
+-- 07. ind librarians who have not issued any books (include attributes librarianid, name)
+select librarians.librarianid,librarians.name as name from librarians left join bookissues on librarians.librarianid = bookissues.librarianid where bookissues.bookid is NULL;
+
