@@ -1,0 +1,95 @@
+-- 
+-- Roll No: 21
+-- Name: Hiba Nasrin
+-- Program: 01
+-- 
+
+
+--
+-- Table structure for table books
+--
+
+create table books(accno int auto_increment unique PRIMARY KEY, title varchar(100) unique not null, author varchar(50) not null, price float(6,2), type ENUM('lending','reference'), availability ENUM('yes','no'), publisherid int);
+
+alter table books add constraint books_fkey_publisherid foreign key(publisherid) references publishers(publisherid);
+
+
+--
+-- Table structure for table publishers
+--
+
+create table publishers(publisherid INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50) UNIQUE NOT NULL, address VARCHAR(100));
+
+--
+-- Table structure for table members
+--
+
+create table members(memberid int AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL, address VARCHAR(100), type ENUM('staff','student'));
+
+-- insert into returns values(301, 103,5,'2025-01-01',0),(302,101,1,'2025-02-16',10),(303, 105,5,'2025-02-01',1000),(304,104,5,'2025-02-02',0),(305,101,1,'2025-01-13',0);
+
+-- Table structure for table issues
+--
+
+create table issues(issueid int AUTO_INCREMENT primary key, memberid int, accno int, issuedate date, duedate date);
+
+alter table issues add constraint issues_fkey_accno foreign key(accno) references books(accno);
+
+alter table issues add constraint issues_fkey_memberid foreign key(memberid) references members(memberid);
+
+--
+-- Table structure for table returns
+--
+
+create table returns(returnid int auto_increment primary key, memberid int , accno int, returndate date, fine int default 0 CHECK(fine >= 0));
+
+alter table returns add constraint returns_fkey_memberid foreign key(memberid) references members(memberid);
+
+alter table returns add constraint returns_fkey_accno foreign key(accno) references books(accno);
+
+
+
+
+--
+-- Dumping data for table publishers
+--
+insert into publishers values(1,'Mathrubhumi books','calicut'),(2,'DC books','edappal'),(3,'ABC books','Tirur'),(4,'Jyothi books','Kuttippuram'),(5,'sneha books','nadakkav');
+
+
+
+--
+-- Dumping data for table books
+--
+
+insert into books values(1,"Premalekhanam", "Basheer",500,"lending","no",1),(2,"Manjaveyil Maranangal","Benyamin", 600,'lending','yes',2),(3,"Aarachar", "KR Meera",400,'reference','yes',3),(4,"Randamoozham", "MT Vasudhevan nair", 850,"lending","no",4),(5,"Balyakalasakhi","Basheer", 200,"lending","yes",5);
+ insert into returns values(301, 103,5,'2025-01-01',0),(302,101,1,'2025-02-16',10),(303, 105,5,'2025-02-01',1000),(304,104,5,'2025-02-02',0),(305,101,1,'2025-01-13',0);
+
+
+ 
+--
+-- Dumping data for table members
+--
+
+insert into members values(101,'somin','thrisur','student'),(102,'Amina','calicut','student'),(103,'Hiba','calicut','staff'),(104,'shahna','tirur','staff'),(105,'anu','edappal','student');
+
+
+--
+-- Dumping data for table issues
+--
+insert into issues values(201,101,1,'2024-12-15','2025-01-14'),(202,103,4,'2024-11-15','2025-01-05'),(203,104,5,'2025-02-01','2025-03-09'),(204,104,3,'2025-01-08','2025-02-13'),(205,105,5,'2024-4-10','2024-12-10');
+
+
+
+--
+-- Dumping data for table returns
+--
+
+ insert into returns values(301, 103,5,'2025-01-01',0),(302,101,1,'2025-02-16',10),(303, 105,5,'2025-02-01',1000),(304,104,5,'2025-02-02',0),(305,101,1,'2025-01-13',0);
+
+
+
+--
+-- SQl Query Statements
+--
+
+
